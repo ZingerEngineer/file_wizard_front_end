@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="icon"
+      href="../assets/file_wizard_white.svg"
+    />
+    <title>File Wizard</title>
+    <link
+      rel="stylesheet"
+      href="./styles.css"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      id="wrapper"
+      class="wrapper flex flex-col justify-center items-center bg-slate-900 w-full h-full"
+    >
+      <div class="title wrapper flex justify-center items-center">
+        <p class="title text-white font-sans mont-black text-[4rem]">
+          FILE WIZARD
+        </p>
+        <img
+          class="w-16"
+          src="../assets/file_wizard_white.svg"
+          alt="file_wizard_icon"
+        />
+      </div>
+      <div class="inputs flex">
+        <input
+          accept="image/* , audio/* , video/* , text/*"
+          id="upload-file-input"
+          class="hidden"
+          type="file"
+          placeholder="insert your file here..."
+        />
+
+        <input
+          class="min-w-0 flex-auto rounded-l-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 focus:outline-none"
+          placeholder="insert your file here..."
+        />
+        <button
+          id="insert-button"
+          type="submit"
+          class="flex-none rounded-r-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        >
+          Insert
+        </button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
