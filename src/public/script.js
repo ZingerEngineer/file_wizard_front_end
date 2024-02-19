@@ -10,38 +10,64 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const insertButton = document.getElementById('insert-button');
 const uploadFileInput = document.getElementById('upload-file-input');
-insertButton === null || insertButton === void 0 ? void 0 : insertButton.addEventListener('click', (event) => {
+const uploadButtonClickHandler = (inputElement, button) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!inputElement.files) {
+            console.log('Input is empty.');
+            return;
+        }
+        const formData = new FormData();
+        formData.append('File', inputElement.files[0]);
+        const res = yield fetch('http://localhost:3001/file/up_file', {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        });
+        if (res.status === 200) {
+            console.log('File uploaded successfully');
+            button.disabled = true;
+            //TODO:Toast success.
+        }
+    }
+    catch (error) {
+        console.log('File upload failed.');
+        //TODO:Toast failure.
+    }
+});
+const createUploadButton = (wrapperElement, inputElement) => {
+    const uploadButton = document.createElement('button');
+    uploadButton.classList.add(...'flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500'.split(' '));
+    uploadButton.innerText = 'Upload';
+    uploadButton.id = 'upload-button';
+    uploadButton.addEventListener('click', () => {
+        uploadButtonClickHandler(inputElement, uploadButton);
+    });
+    console.log('Event listener added.');
+    wrapperElement === null || wrapperElement === void 0 ? void 0 : wrapperElement.appendChild(uploadButton);
+    console.log('upload button created.');
+};
+const removeUploadButton = (wrapperElement, uploadButton, eventListener) => {
+    uploadButton.removeEventListener('click', () => eventListener);
+    console.log('Listener removed.');
+    wrapperElement.removeChild(uploadButton);
+    console.log('Button Removed.');
+};
+insertButton.addEventListener('click', (event) => {
     event.preventDefault();
-    uploadFileInput === null || uploadFileInput === void 0 ? void 0 : uploadFileInput.click();
-    uploadFileInput === null || uploadFileInput === void 0 ? void 0 : uploadFileInput.addEventListener('input', () => {
-        const wrapperClass = document.getElementById('wrapper');
-        const uploadButton = document.createElement('button');
-        uploadButton.classList.add(...'flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500'.split(' '));
-        uploadButton.innerText = 'Upload';
-        uploadButton.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
-            try {
-                if (!uploadFileInput.files) {
-                    //Notify user that an error happened.
-                    return;
-                }
-                const fileBufferArray = yield uploadFileInput.files[0].arrayBuffer();
-                const fileBlob = new Blob([fileBufferArray]);
-                console.log(fileBlob.arrayBuffer());
-                const formData = new FormData();
-                formData.append('File', fileBlob);
-                const res = yield fetch('http://localhost:3001/file/up_file', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'content-type': 'form-data'
-                    }
-                });
-                console.log(res);
-            }
-            catch (error) {
-                console.log('Error happened.', error);
-            }
-        }));
-        wrapperClass === null || wrapperClass === void 0 ? void 0 : wrapperClass.appendChild(uploadButton);
+    uploadFileInput.click();
+    uploadFileInput.addEventListener('input', () => {
+        const wrapper = document.getElementById('wrapper');
+        const inputField = document.getElementById('input-field');
+        inputField.value = uploadFileInput.value;
+        if (!wrapper)
+            return;
+        if (!document.getElementById('upload-button')) {
+            createUploadButton(wrapper, uploadFileInput);
+        }
+        else {
+            const uploadButton = document.getElementById('upload-button');
+            removeUploadButton(wrapper, uploadButton, () => uploadButtonClickHandler(uploadFileInput, uploadButton));
+            createUploadButton(wrapper, uploadFileInput);
+        }
     });
 });

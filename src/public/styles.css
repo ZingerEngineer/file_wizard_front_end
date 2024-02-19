@@ -564,8 +564,24 @@ video {
   width: 100%;
 }
 
-.min-w-0 {
-  min-width: 0px;
+.min-w-40 {
+  min-width: 10rem;
+}
+
+.min-w-80 {
+  min-width: 20rem;
+}
+
+.min-w-60 {
+  min-width: 15rem;
+}
+
+.max-w-40 {
+  max-width: 10rem;
+}
+
+.max-w-7xl {
+  max-width: 80rem;
 }
 
 .flex-auto {
@@ -707,7 +723,12 @@ video {
   font-weight: 900;
 }
 
-body,html{
+html{
+  width: 100vw;
+  height: 100vh;
+}
+
+body{
   margin: 0px;
   width: 100%;
   height: 100%;
@@ -752,15 +773,4 @@ body,html{
 
 .focus-visible\:outline-indigo-500:focus-visible {
   outline-color: #6366f1;
-}
-
-@media (min-width: 640px) {
-  .sm\:text-sm {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-
-  .sm\:leading-6 {
-    line-height: 1.5rem;
-  }
 }
